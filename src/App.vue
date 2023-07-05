@@ -1,9 +1,11 @@
 <template>
   <nav>
     <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+    <router-link to="/about">About</router-link> |
+    <router-link v-if="!$store.state.username" to="/login">Login</router-link>
+    <a v-if="$store.state.username" @click="logout" class="link-pointer">Logout</a>
   </nav>
-  <router-view/>
+  <router-view />
 </template>
 
 <style>
@@ -27,4 +29,22 @@ nav a {
 nav a.router-link-exact-active {
   color: #42b983;
 }
+
+.link-pointer {
+  cursor: pointer;
+}
 </style>
+
+<script>
+export default {
+  mounted() {
+    this.$store.commit('initialiseStore')
+  },
+  methods: {
+    logout() {
+      this.$store.commit('logout')
+    }
+
+  },
+}
+</script>
